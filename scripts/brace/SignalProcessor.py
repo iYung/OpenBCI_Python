@@ -2,6 +2,7 @@ from FrameBuffer import FrameBuffer
 from filterEMG import filterEMG
 import numpy as np
 from processIntent import *
+import os
 
 class SignalProcessor:
 	prevEMG = 0
@@ -60,8 +61,16 @@ class SignalProcessor:
 			filteredEMG = filterEMG(time, EMGSample, sfreq=100, low_band=49, high_band=10, low_pass=5)
 			decision = processIntentEMG(filteredEMG, self.prevEMG, self.EMGThreshold)
 			self.prevEMG = decision
+			if decision == 1:
+				dirname = os.path.dirname(__file__)
+				filename = os.path.join(dirname, '../EPOS_Linux_Library/examples/HelloEposCmd/initMotor')
+				os.system(filename)
+			else:
+				dirname = os.path.dirname(__file__)
+				filename = os.path.join(dirname, '../EPOS_Linux_Library/examples/HelloEposCmd/haltMotor')
+				os.system(filename)
 			return decision
-		return -1
+		return 0
 
 	def calibrateEMG(self, EMGSample):
 		time = time = np.array([i*0.1 for i in range(100)])

@@ -13,5 +13,5 @@ import os
 #os.system("echo startMotor.py")
 #os.system("echo haltMotor.py")
 
-os.system("/home/pi/Downloads/EPOS_Linux_Library/examples/HelloEposCmd/initMotor")
-os.system("/home/pi/Downloads/EPOS_Linux_Library/examples/HelloEposCmd/haltMotor")
+os.system("../EPOS_Linux_Library/examples/HelloEposCmd/initMotor")
+os.system("../EPOS_Linux_Library/examples/HelloEposCmd/haltMotor")
