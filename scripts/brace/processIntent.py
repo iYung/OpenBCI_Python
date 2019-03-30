@@ -1,13 +1,11 @@
 import numpy as np
 
 # given a filtered EMG signal, determines whether or not the brace should move
-def processIntentEMG(filteredSignal, frameBuffer):
+def processIntentEMG(filteredSignal, frameBuffer, moveThres):
     #moveThres: original readings: 0.1
     #           new readings: 0.02
-    moveThres = 0.002
-    #moveThres = 0.00000055
+    # moveThres = 0.025
     # if the mean signal is above moveThres (samples can be 0-1), the brace should move
-    print(np.std(filteredSignal))
     if (np.std(filteredSignal) > moveThres):
         #print 1
         return 1
