@@ -6,10 +6,12 @@ def processIntentEMG(filteredSignal, frameBuffer, moveThres):
     #           new readings: 0.02
     # moveThres = 0.025
     # if the mean signal is above moveThres (samples can be 0-1), the brace should move
-    if (np.std(filteredSignal) > moveThres):
+    stanadardDeviation = np.std(filteredSignal)
+    #print stanadardDeviation
+    if (stanadardDeviation > moveThres):
         #print 1
         return 1
-    elif 1 in frameBuffer:
+    elif frameBuffer == 1:
         #print 1
         return 2
     else:
