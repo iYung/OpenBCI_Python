@@ -66,11 +66,11 @@ class SignalProcessor:
 			self.prevEMG = decision
 			if decision > 0:
 				dirname = os.path.dirname(__file__)
-				filename = os.path.join(dirname, '../EPOS_Linux_Library/examples/HelloEposCmd/initMotor')
+				filename = os.path.join(dirname, 'EPOS_Linux_Library/examples/HelloEposCmd/initMotor').replace("\\","/")
 				os.system(filename)
 			else:
 				dirname = os.path.dirname(__file__)
-				filename = os.path.join(dirname, '../EPOS_Linux_Library/examples/HelloEposCmd/haltMotor')
+				filename = os.path.join(dirname, 'EPOS_Linux_Library/examples/HelloEposCmd/haltMotor').replace("\\","/")
 				os.system(filename)
 			print decision>0
 		return 0
