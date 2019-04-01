@@ -135,8 +135,8 @@ void SetDefaultParameters()
 	g_deviceName = "EPOS"; 
 	g_protocolStackName = "MAXON_RS232"; 
 	g_interfaceName = "RS232"; 
-	g_portName = "ACM0"; 
-	g_baudrate = 9600; 
+	g_portName = "/dev/ttyS1"; 
+	g_baudrate = 115200; 
 }
 
 int OpenDevice(unsigned int* p_pErrorCode)

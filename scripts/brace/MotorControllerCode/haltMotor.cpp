@@ -26,7 +26,7 @@ unsigned short node = 1;
 string deviceName = "EPOS";
 string protocolStackName = "MAXON_RS232";
 string interfaceName = "RS232";
-string portName = "/dev/ttyS0";
+string portName = "/dev/ttyS1";
 //baudrate = "115200";
 unsigned int errorCode = 0;
 
@@ -57,20 +57,18 @@ else
 	cout << "FAIL11!";
 
 
-long vel[3] = {0,0,0};
+
 
 if(VCS_ActivateProfileVelocityMode(keyHandle,node,&errorCode))
 	cout << "velocity mode activated" << endl;
 
 VCS_SetEnableState(keyHandle,node,&errorCode);
-for(int i=0; i <3;i++){
+
 if(VCS_HaltVelocityMovement(keyHandle, node, &errorCode)== 0){
 	cout<< "error :" ;
 	cout<< errorCode << endl;
 
 }
-sleep(3);
-cout<<"wait 3 s"<< endl;
-}
+
 return 1;
 }
