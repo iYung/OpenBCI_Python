@@ -13,7 +13,8 @@ def filterEMG(time, emg, low_pass=10, sfreq=200, high_band=20, low_band=99):
     low_band = low_band/(1.0*sfreq/2)
     b, a = sp.signal.butter(4, [high_band, low_band], btype='bandpass')
     # normalize the signal
-    emg_norm = [i / 500.0 for i in emg]
+    #emg_norm = [i / 500.0 for i in emg]
 
-    emg_filtered = sp.signal.filtfilt(b, a, emg_norm)
-    return emg_filtered
+    emg_filtered = sp.signal.filtfilt(b, a, emg)
+    #return emg_filtered
+    return emg

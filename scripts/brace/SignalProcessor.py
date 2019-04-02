@@ -11,8 +11,8 @@ class SignalProcessor:
 	flexAverage = 0
 	relaxAverage = 0
 	EMGThreshold = 0
-	freq = 200
-	window = 100
+	freq = 800
+	window = 200
 
 	def __init__(self):
 		self.prevEMG = 0
@@ -34,8 +34,8 @@ class SignalProcessor:
 				self.calibrationPhase = "flex"
 
 		if self.calibrationPhase == "flex":
-			#time = np.array([i*0.1 for i in range(100)])
-			# filteredEMG = filterEMG(time, EMGSample, sfreq=100, low_band=49, high_band=10, low_pass=5)
+			time = np.array([i*0.1 for i in range(100)])
+			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
 			self.EMGBuffer.append(np.std(EMGSample))
 			# print out the mean for the previous 3 seconds
 			if (len(self.EMGBuffer)>self.freq*3/self.window):
@@ -52,8 +52,8 @@ class SignalProcessor:
 				self.calibrationPhase = "relax"
 
 		if self.calibrationPhase == "relax":
-			#time = np.array([i*0.1 for i in range(100)])
-			# filteredEMG = filterEMG(time, EMGSample, sfreq=100, low_band=49, high_band=10, low_pass=5)
+			time = np.array([i*0.1 for i in range(100)])
+			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
 			self.EMGBuffer.append(np.std(EMGSample))
 
 			# print out the mean for the previous 3 seconds
@@ -66,8 +66,8 @@ class SignalProcessor:
 				self.calibrationPhase = "running"
 
 		if self.calibrationPhase == "running":
-			#time = np.array([i*0.1 for i in range(100)])
-			# filteredEMG = filterEMG(time, EMGSample, sfreq=100, low_band=49, high_band=10, low_pass=5)
+			time = np.array([i*0.1 for i in range(100)])
+			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
 			decision = processIntentEMG(EMGSample, self.prevEMG, self.EMGThreshold)
 			
 			if decision > 0 and self.prevEMG == 0:

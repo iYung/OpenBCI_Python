@@ -18,7 +18,7 @@ class State:
     def update(self, sample):
         if len(sample.channel_data) > 3:
             self.bicep.append(sample.channel_data[1])
-        if len(self.bicep) >= 100:
+        if len(self.bicep) >= 200:
             thread.start_new_thread( self.sp.processEMG, (self.bicep, ) )
             self.bicep = []
 

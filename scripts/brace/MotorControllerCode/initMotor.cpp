@@ -62,7 +62,9 @@ long vel = 2000;
 
 if(VCS_ActivateProfileVelocityMode(keyHandle,node,&errorCode))
 	cout << "velocity mode activated" << endl;
-VCS_SetEnableState(keyHandle,node,&errorCode);
+
+if(VCS_SetEnableState(keyHandle,node,&errorCode)==0);
+	cout << &errorCode;
 
 if(VCS_MoveWithVelocity(keyHandle,node,vel,&errorCode)== 0){
 	cout<< "error :" ;
