@@ -11,7 +11,7 @@ class SignalProcessor:
 	flexAverage = 0
 	relaxAverage = 0
 	EMGThreshold = 0
-	freq = 200
+	freq = 1600
 	window = 200
 
 	def __init__(self):
@@ -73,11 +73,11 @@ class SignalProcessor:
 			if decision > 0 and self.prevEMG == 0:
 				dirname = os.path.dirname(__file__)
 				filename = os.path.join(dirname, 'MotorControllerCode/initMotor1').replace("\\","/")
-				os.system(filename + " > /dev/null &")
+				# os.system(filename + " > /dev/null &")
 			elif decision == 0 and self.prevEMG > 0:
 				dirname = os.path.dirname(__file__)
 				filename = os.path.join(dirname, 'MotorControllerCode/haltMotor1').replace("\\","/")
-				os.system(filename + " > /dev/null &")
+				# os.system(filename + " > /dev/null &")
 			self.prevEMG = decision
 			print decision>0
 		return 0

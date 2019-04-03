@@ -9,7 +9,7 @@ import timeit
 # Filters a sampled EMG signal
 
 
-def filterEMG(time, emg, sfreq=800, low_band=50, high_band=15, low_pass=10):
+def filterEMG(time, emg, sfreq=1600, low_band=50, high_band=15, low_pass=10):
     # create bandpass filter for EMG
     high_band = high_band/(1.0*sfreq/2)
     low_band = low_band/(1.0*sfreq/2)
@@ -18,12 +18,12 @@ def filterEMG(time, emg, sfreq=800, low_band=50, high_band=15, low_pass=10):
 
     #simulating a notch filter
     #this is the lower freq part of it
-    high_band1 = 0/(1.0*sfreq/2)
+    high_band1 = 1/(1.0*sfreq/2)
     low_band1 = 58/(1.0*sfreq/2)
     b1, a1 = sp.signal.butter(5, [high_band1, low_band1], btype='bandpass')
     #this is the higher freq part of it
     high_band2 = 62/(1.0*sfreq/2)
-    low_band2 = (sfreq-1)/(1.0*sfreq/2)
+    low_band2 = ((sfreq/2)-1)/(1.0*sfreq/2)
     b1, a1 = sp.signal.butter(5, [high_band2, low_band2], btype='bandpass')
 
     # b1, a1 = signal.iirnotch(60, 30, sfreq)
