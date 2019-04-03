@@ -19,6 +19,6 @@ def filterEMG(time, emg, sfreq=800, low_band=50, high_band=15, low_pass=10):
     #emg_norm = [i / 500.0 for i in emg]
 
     emg_filtered = sp.signal.filtfilt(b, a, emg)
-    emg_filtered2 = sp.signal.filtfilt(b2, a2, emg_filtered)
+    emg_filtered2 = sp.signal.filtfilt(b1, a1, emg_filtered)
     # return emg_filtered
     return emg_filtered2
