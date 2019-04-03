@@ -17,7 +17,7 @@ class SignalProcessor:
 	def __init__(self):
 		self.prevEMG = 0
 		dirname = os.path.dirname(__file__)
-		filename = os.path.join(dirname, 'MotorControllerCode/haltMotor1').replace("\\","/")
+		filename = os.path.join(dirname, 'MotorControllerCode/haltMotor2').replace("\\","/")
 		os.system(filename + " > /dev/null &")
 
 	def processEMG(self, EMGSample):

@@ -277,7 +277,7 @@ int DemoProfilePositionMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, un
 				break;
 			}
 
-			sleep(1);
+			
 		}
 
 		if(lResult == MMC_SUCCESS)
