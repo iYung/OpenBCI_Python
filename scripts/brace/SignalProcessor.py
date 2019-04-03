@@ -79,5 +79,5 @@ class SignalProcessor:
 				filename = os.path.join(dirname, 'MotorControllerCode/haltMotor1').replace("\\","/")
 				os.system(filename + " > /dev/null &")
 			self.prevEMG = decision
-			#print decision>0
+			print decision>0
 		return 0
