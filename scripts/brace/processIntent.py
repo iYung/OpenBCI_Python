@@ -11,9 +11,9 @@ def processIntentEMG(filteredSignal, frameBuffer, moveThres):
     if (stanadardDeviation > moveThres):
         #print 1
         return 1
-   # elif frameBuffer == 1:
+    elif frameBuffer == 1:
         #print 1
-    #    return 2
+        return 2
     else:
         # print 0
         return 0
