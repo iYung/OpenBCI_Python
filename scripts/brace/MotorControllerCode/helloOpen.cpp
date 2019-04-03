@@ -111,22 +111,7 @@ void SeparatorLine()
 	cout << endl;
 }
 
-void PrintSettings()
-{
-	stringstream msg;
 
-	msg << "default settings:" << endl;
-	msg << "node id             = " << g_usNodeId << endl;
-	msg << "device name         = '" << g_deviceName << "'" << endl;
-	msg << "protocal stack name = '" << g_protocolStackName << "'" << endl;
-	msg << "interface name      = '" << g_interfaceName << "'" << endl;
-	msg << "port name           = '" << g_portName << "'"<< endl;
-	msg << "baudrate            = " << g_baudrate;
-
-	LogInfo(msg.str());
-
-	SeparatorLine();
-}
 
 void SetDefaultParameters()
 {
@@ -260,58 +245,7 @@ int ParseArguments(int argc, char** argv)
 	return lResult;
 }
 
-int DemoProfilePositionMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, unsigned int & p_rlErrorCode)
-{
-	int lResult = MMC_SUCCESS;
-	stringstream msg;
 
-	msg << "set profile position mode, node = " << p_usNodeId;
-	LogInfo(msg.str());
-
-	if(VCS_ActivateProfilePositionMode(p_DeviceHandle, p_usNodeId, &p_rlErrorCode) == 0)
-	{
-		LogError("VCS_ActivateProfilePositionMode", lResult, p_rlErrorCode);
-		lResult = MMC_FAILED;
-	}
-	else
-	{
-		list<long> positionList;
-
-		positionList.push_back(5000);
-		positionList.push_back(-10000);
-		positionList.push_back(5000);
-
-		for(list<long>::iterator it = positionList.begin(); it !=positionList.end(); it++)
-		{
-			long targetPosition = (*it);
-			stringstream msg;
-			msg << "move to position = " << targetPosition << ", node = " << p_usNodeId;
-			LogInfo(msg.str());
-
-			if(VCS_MoveToPosition(p_DeviceHandle, p_usNodeId, targetPosition, 0, 1, &p_rlErrorCode) == 0)
-			{
-				LogError("VCS_MoveToPosition", lResult, p_rlErrorCode);
-				lResult = MMC_FAILED;
-				break;
-			}
-
-			sleep(1);
-		}
-
-		if(lResult == MMC_SUCCESS)
-		{
-			LogInfo("halt position movement");
-
-			if(VCS_HaltPositionMovement(p_DeviceHandle, p_usNodeId, &p_rlErrorCode) == 0)
-			{
-				LogError("VCS_HaltPositionMovement", lResult, p_rlErrorCode);
-				lResult = MMC_FAILED;
-			}
-		}
-	}
-
-	return lResult;
-}
 
 bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, unsigned int & p_rlErrorCode)
 {
@@ -331,10 +265,8 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 	{
 		list<long> velocityList;
 
-		velocityList.push_back(100);
-		velocityList.push_back(500);
-		velocityList.push_back(1000);
-		velocityList.push_back(8000);
+		velocityList.push_back(2000);
+		
 
 		for(list<long>::iterator it = velocityList.begin(); it !=velocityList.end(); it++)
 		{
@@ -354,16 +286,7 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 			sleep(1);
 		}
 
-		if(lResult == MMC_SUCCESS)
-		{
-			LogInfo("halt velocity movement");
-
-			if(VCS_HaltVelocityMovement(p_DeviceHandle, p_usNodeId, &p_rlErrorCode) == 0)
-			{
-				lResult = MMC_FAILED;
-				LogError("VCS_HaltVelocityMovement", lResult, p_rlErrorCode);
-			}
-		}
+		
 	}
 
 	return lResult;
@@ -463,23 +386,7 @@ int Demo(unsigned int* p_pErrorCode)
 	{
 		LogError("DemoProfileVelocityMode", lResult, lErrorCode);
 	}
-	else
-	{
-		lResult = DemoProfilePositionMode(g_pKeyHandle, g_usNodeId, lErrorCode);
-
-		if(lResult != MMC_SUCCESS)
-		{
-			LogError("DemoProfilePositionMode", lResult, lErrorCode);
-		}
-		else
-		{
-			if(VCS_SetDisableState(g_pKeyHandle, g_usNodeId, &lErrorCode) == 0)
-			{
-				LogError("VCS_SetDisableState", lResult, lErrorCode);
-				lResult = MMC_FAILED;
-			}
-		}
-	}
+	
 
 	return lResult;
 }
@@ -628,7 +535,7 @@ int main(int argc, char** argv)
 		return lResult;
 	}
 
-	PrintSettings();
+	
 
 	switch(g_eAppMode)
 	{
@@ -658,12 +565,8 @@ int main(int argc, char** argv)
 				return lResult;
 			}
 		} break;
-		case AM_INTERFACE_LIST:
-			PrintAvailableInterfaces();
-			break;
-		case AM_PROTOCOL_LIST:
-			PrintAvailableProtocols();
-			break;
+	
+	
 		case AM_VERSION_INFO:
 		{
 			if((lResult = OpenDevice(&ulErrorCode))!=MMC_SUCCESS)
@@ -672,11 +575,7 @@ int main(int argc, char** argv)
 				return lResult;
 			}
 
-			if((lResult = PrintDeviceVersion()) != MMC_SUCCESS)
-		    {
-				LogError("PrintDeviceVersion", lResult, ulErrorCode);
-				return lResult;
-		    }
+			
 
 			if((lResult = CloseDevice(&ulErrorCode))!=MMC_SUCCESS)
 			{

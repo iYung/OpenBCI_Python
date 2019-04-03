@@ -111,22 +111,7 @@ void SeparatorLine()
 	cout << endl;
 }
 
-void PrintSettings()
-{
-	stringstream msg;
 
-	msg << "default settings:" << endl;
-	msg << "node id             = " << g_usNodeId << endl;
-	msg << "device name         = '" << g_deviceName << "'" << endl;
-	msg << "protocal stack name = '" << g_protocolStackName << "'" << endl;
-	msg << "interface name      = '" << g_interfaceName << "'" << endl;
-	msg << "port name           = '" << g_portName << "'"<< endl;
-	msg << "baudrate            = " << g_baudrate;
-
-	LogInfo(msg.str());
-
-	SeparatorLine();
-}
 
 void SetDefaultParameters()
 {
@@ -153,7 +138,6 @@ int OpenDevice(unsigned int* p_pErrorCode)
 	strcpy(pInterfaceName, g_interfaceName.c_str());
 	strcpy(pPortName, g_portName.c_str());
 
-	LogInfo("Open device...");
 
 	g_pKeyHandle = VCS_OpenDevice(pDeviceName, pProtocolStackName, pInterfaceName, pPortName, p_pErrorCode);
 
@@ -195,8 +179,7 @@ int CloseDevice(unsigned int* p_pErrorCode)
 
 	*p_pErrorCode = 0;
 
-	LogInfo("Close device");
-
+	
 	if(VCS_CloseDevice(g_pKeyHandle, p_pErrorCode)!=0 && *p_pErrorCode == 0)
 	{
 		lResult = MMC_SUCCESS;
@@ -277,9 +260,8 @@ int DemoProfilePositionMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, un
 	{
 		list<long> positionList;
 
-		positionList.push_back(5000);
-		positionList.push_back(-10000);
-		positionList.push_back(5000);
+		positionList.push_back(0);
+		
 
 		for(list<long>::iterator it = positionList.begin(); it !=positionList.end(); it++)
 		{
@@ -318,9 +300,6 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 	int lResult = MMC_SUCCESS;
 	stringstream msg;
 
-	msg << "set profile velocity mode, node = " << p_usNodeId;
-
-	LogInfo(msg.str());
 
 	if(VCS_ActivateProfileVelocityMode(p_DeviceHandle, p_usNodeId, &p_rlErrorCode) == 0)
 	{
@@ -331,18 +310,15 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 	{
 		list<long> velocityList;
 
-		velocityList.push_back(100);
-		velocityList.push_back(500);
-		velocityList.push_back(1000);
-		velocityList.push_back(8000);
+		velocityList.push_back(0);
+		
 
 		for(list<long>::iterator it = velocityList.begin(); it !=velocityList.end(); it++)
 		{
 			long targetvelocity = (*it);
 
 			stringstream msg;
-			msg << "move with target velocity = " << targetvelocity << " rpm, node = " << p_usNodeId;
-			LogInfo(msg.str());
+			
 
 			if(VCS_MoveWithVelocity(p_DeviceHandle, p_usNodeId, targetvelocity, &p_rlErrorCode) == 0)
 			{
@@ -463,23 +439,7 @@ int Demo(unsigned int* p_pErrorCode)
 	{
 		LogError("DemoProfileVelocityMode", lResult, lErrorCode);
 	}
-	else
-	{
-		lResult = DemoProfilePositionMode(g_pKeyHandle, g_usNodeId, lErrorCode);
-
-		if(lResult != MMC_SUCCESS)
-		{
-			LogError("DemoProfilePositionMode", lResult, lErrorCode);
-		}
-		else
-		{
-			if(VCS_SetDisableState(g_pKeyHandle, g_usNodeId, &lErrorCode) == 0)
-			{
-				LogError("VCS_SetDisableState", lResult, lErrorCode);
-				lResult = MMC_FAILED;
-			}
-		}
-	}
+	
 
 	return lResult;
 }
@@ -628,7 +588,7 @@ int main(int argc, char** argv)
 		return lResult;
 	}
 
-	PrintSettings();
+	
 
 	switch(g_eAppMode)
 	{
@@ -672,11 +632,6 @@ int main(int argc, char** argv)
 				return lResult;
 			}
 
-			if((lResult = PrintDeviceVersion()) != MMC_SUCCESS)
-		    {
-				LogError("PrintDeviceVersion", lResult, ulErrorCode);
-				return lResult;
-		    }
 
 			if((lResult = CloseDevice(&ulErrorCode))!=MMC_SUCCESS)
 			{

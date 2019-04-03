@@ -26,7 +26,7 @@ unsigned short node = 1;
 string deviceName = "EPOS";
 string protocolStackName = "MAXON_RS232";
 string interfaceName = "RS232";
-string portName = "/dev/ttyS1";
+string portName = "/dev/ttyS35";
 //baudrate = "115200";
 unsigned int errorCode = 0;
 

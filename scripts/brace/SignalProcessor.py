@@ -17,7 +17,7 @@ class SignalProcessor:
 	def __init__(self):
 		self.prevEMG = 0
 		dirname = os.path.dirname(__file__)
-		filename = os.path.join(dirname, 'MotorControllerCode/haltMotor').replace("\\","/")
+		filename = os.path.join(dirname, 'MotorControllerCode/haltMotor1').replace("\\","/")
 		os.system(filename + " > /dev/null &")
 
 	def processEMG(self, EMGSample):
@@ -72,12 +72,12 @@ class SignalProcessor:
 
 			if decision > 0 and self.prevEMG == 0:
 				dirname = os.path.dirname(__file__)
-				filename = os.path.join(dirname, 'MotorControllerCode/initMotor1').replace("\\","/")
-				# os.system(filename + " > /dev/null &")
+				filename = os.path.join(dirname, 'MotorControllerCode/initMotor2').replace("\\","/")
+				os.system(filename + " > /dev/null &")
 			elif decision == 0 and self.prevEMG > 0:
 				dirname = os.path.dirname(__file__)
-				filename = os.path.join(dirname, 'MotorControllerCode/haltMotor1').replace("\\","/")
-				# os.system(filename + " > /dev/null &")
+				filename = os.path.join(dirname, 'MotorControllerCode/haltMotor2').replace("\\","/")
+				os.system(filename + " > /dev/null &")
 			self.prevEMG = decision
 			print decision>0
 		return 0
