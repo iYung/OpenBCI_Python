@@ -327,7 +327,6 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 				break;
 			}
 
-			sleep(1);
 		}
 
 		if(lResult == MMC_SUCCESS)
