@@ -11,7 +11,7 @@ class SignalProcessor:
 	flexAverage = 0
 	relaxAverage = 0
 	EMGThreshold = 0
-	freq = 800
+	freq = 200
 	window = 200
 
 	def __init__(self):
@@ -34,7 +34,7 @@ class SignalProcessor:
 				self.calibrationPhase = "flex"
 
 		if self.calibrationPhase == "flex":
-			time = np.array([i*0.1 for i in range(100)])
+			time = np.array([i*1.0/self.freq for i in range(self.window)])
 			filteredEMG = filterEMG(time, EMGSample)
 			self.EMGBuffer.append(np.std(filteredEMG))
 			# print out the mean for the previous 3 seconds
@@ -52,7 +52,7 @@ class SignalProcessor:
 				self.calibrationPhase = "relax"
 
 		if self.calibrationPhase == "relax":
-			time = np.array([i*0.1 for i in range(100)])
+			time = np.array([i*1.0/self.freq for i in range(self.window)])
 			filteredEMG = filterEMG(time, EMGSample)
 			self.EMGBuffer.append(np.std(filteredEMG))
 
@@ -66,7 +66,7 @@ class SignalProcessor:
 				self.calibrationPhase = "running"
 
 		if self.calibrationPhase == "running":
-			time = np.array([i*0.1 for i in range(100)])
+			time = np.array([i*1.0/self.freq for i in range(self.window)])
 			filteredEMG = filterEMG(time, EMGSample)
 			decision = processIntentEMG(filteredEMG, self.prevEMG, self.EMGThreshold)
 
