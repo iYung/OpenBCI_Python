@@ -22,7 +22,7 @@ class SignalProcessor:
 
 	def processEMG(self, EMGSample):
 		if self.calibrationPhase == "init":
-                    
+
 			print "prepare to flex"
 			self.calibrationPhase = "init2"
 
@@ -35,8 +35,8 @@ class SignalProcessor:
 
 		if self.calibrationPhase == "flex":
 			time = np.array([i*0.1 for i in range(100)])
-			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
-			self.EMGBuffer.append(np.std(EMGSample))
+			filteredEMG = filterEMG(time, EMGSample)
+			self.EMGBuffer.append(np.std(filteredEMG))
 			# print out the mean for the previous 3 seconds
 			if (len(self.EMGBuffer)>self.freq*3/self.window):
 				self.flexAverage = np.mean(self.EMGBuffer)
@@ -53,8 +53,8 @@ class SignalProcessor:
 
 		if self.calibrationPhase == "relax":
 			time = np.array([i*0.1 for i in range(100)])
-			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
-			self.EMGBuffer.append(np.std(EMGSample))
+			filteredEMG = filterEMG(time, EMGSample)
+			self.EMGBuffer.append(np.std(filteredEMG))
 
 			# print out the mean for the previous 3 seconds
 			if (len(self.EMGBuffer)>=self.freq*3/self.window):
@@ -67,9 +67,9 @@ class SignalProcessor:
 
 		if self.calibrationPhase == "running":
 			time = np.array([i*0.1 for i in range(100)])
-			filteredEMG = filterEMG(time, EMGSample, sfreq=200, low_band=99, high_band=20, low_pass=10)
-			decision = processIntentEMG(EMGSample, self.prevEMG, self.EMGThreshold)
-			
+			filteredEMG = filterEMG(time, EMGSample)
+			decision = processIntentEMG(filteredEMG, self.prevEMG, self.EMGThreshold)
+
 			if decision > 0 and self.prevEMG == 0:
 				dirname = os.path.dirname(__file__)
 				filename = os.path.join(dirname, 'MotorControllerCode/initMotor').replace("\\","/")
