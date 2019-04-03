@@ -24,6 +24,7 @@ class State:
 
 if __name__ == '__main__':
     state = State()
-    shield = bci.OpenBCIWiFi(ip_address='192.168.4.1', log=True, high_speed=True)
+    shield = bci.OpenBCIWiFi(ip_address='192.166.0.2', log=True, high_speed=True)
+    shield.set_sample_rate(1600)
     shield.start_streaming(state.update)
     shield.loop()
