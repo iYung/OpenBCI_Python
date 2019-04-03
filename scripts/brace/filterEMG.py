@@ -23,7 +23,7 @@ def filterEMG(time, emg, sfreq=800, low_band=50, high_band=15, low_pass=10):
     b1, a1 = sp.signal.butter(5, [high_band1, low_band1], btype='bandpass')
     #this is the higher freq part of it
     high_band2 = 62/(1.0*sfreq/2)
-    low_band2 = sfreq/(1.0*sfreq/2)
+    low_band2 = (sfreq-1)/(1.0*sfreq/2)
     b1, a1 = sp.signal.butter(5, [high_band2, low_band2], btype='bandpass')
 
     # b1, a1 = signal.iirnotch(60, 30, sfreq)
