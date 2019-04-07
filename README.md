@@ -1,4 +1,5 @@
 The script to run the brace is in the /scripts/brace folder.
+The script is /scripts/brace/stream_data_wifi_high_speed.py.
 
 # OpenBCI Python
 
