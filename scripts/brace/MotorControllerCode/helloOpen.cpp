@@ -265,7 +265,7 @@ bool DemoProfileVelocityMode(HANDLE p_DeviceHandle, unsigned short p_usNodeId, u
 	{
 		list<long> velocityList;
 
-		velocityList.push_back(2000);
+		velocityList.push_back(6000);
 		
 
 		for(list<long>::iterator it = velocityList.begin(); it !=velocityList.end(); it++)
