@@ -32,10 +32,10 @@ def filterEEG(time, eeg, low_pass=10, sfreq=200, high_band=30, low_band=8):
     # print "mobility: " + str(eeg_hfd)
     # print "signal: " + str(eeg_filtered)
 
+    # example of how to fft the signal
     # eeg_ifft = np.fft.fft(eeg_filtered)
     # eeg_real = np.real(eeg_ifft)
 
-    #print eeg_real
     # eeg_rectified = abs(eeg_real)
 
     # low_pass = 1.0*low_pass/(1.0*sfreq)

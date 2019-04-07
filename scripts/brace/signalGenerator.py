@@ -2,6 +2,10 @@
 import random
 import numpy as np
 
+
+# Collection of functions used to generate sample signals, or read them from
+# text files
+
 fileNames = [
     "EMG2sec.txt",
     "normalFlexRelease-4-sec.txt",
@@ -17,7 +21,7 @@ def getSampleOne():
     emg = []
     quiet = np.random.uniform(-0.05, 0.05, 25) + 0.08
     burst = np.random.uniform(-1, 1, 25) + 0.08
-    for index in range(0, 4):    
+    for index in range(0, 4):
         if (random.randint(0,2) == 1):
             emg = np.concatenate([emg, burst])
         else:
@@ -46,7 +50,7 @@ def getSampleTwo():
                 else:
                     size = 0.1;
             if (size > 0.0):
-                size = size - 0.1 
+                size = size - 0.1
         signalSection = np.random.uniform(-size, size, 4) + 0.08
         emg = np.concatenate([emg, signalSection])
     time = np.array([i*1.0/1000.0 for i in range(0, len(emg), 1)])
@@ -62,7 +66,7 @@ def getRealSample():
         items = line.split(",")
         emg = emg + [items[1]]
     time = np.array([i*1.0/200.0 for i in range(0, len(emg), 1)])
-    
+
     return np.array(emg).astype(np.float), time
 
 def getEEGSample():
@@ -73,7 +77,7 @@ def getEEGSample():
         items = line.split(", ")
         eeg = eeg + [items[3]]
     time = np.array([i*1.0/200.0 for i in range(0, len(eeg), 1)])
-    
+
     return np.array(eeg).astype(np.float), time
 
 # emg, time = getRealSample()

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from filterEMG import filterEMG 
+from filterEMG import filterEMG
 from filterEEG import filterEEG
 from processIntent import processIntentEMG, processIntentEEG
 from signalGenerator import *
@@ -12,7 +12,9 @@ import time as tm
 import timeit
 from PIL import Image, ImageDraw
 import mne
-from FrameBuffer import FrameBuffer 
+from FrameBuffer import FrameBuffer
+
+# File used to visualize the signal processing in action
 
 fig = plt.figure(figsize=(12,6))
 
@@ -54,7 +56,7 @@ def update(frame):
     else:
         FrameBuffer.addElement(0)
         img=mpimg.imread('red.png')
-        imgColour=plt.imshow(img) 
+        imgColour=plt.imshow(img)
 
     plt.subplot(2,3,4)
     imOrigEEG=plt.plot(eegTime, eeg, animated=True, color="blue")
@@ -76,7 +78,7 @@ def update(frame):
     else:
         FrameBuffer.addEEGBuffer(0)
         img=mpimg.imread('red.png')
-        imgColourEEG=plt.imshow(img) 
+        imgColourEEG=plt.imshow(img)
 
     return tuple(imOrig) + tuple(imFilt) + tuple(imOrigEEG) + tuple(imFiltEEG) + (imgColour, imgColourEEG,)
 
