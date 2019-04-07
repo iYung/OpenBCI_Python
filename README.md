@@ -1,3 +1,5 @@
+The script to run the brace is in the /scripts/brace folder.
+
 # OpenBCI Python
 
 <p align="center">
